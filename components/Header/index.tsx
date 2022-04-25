@@ -10,6 +10,7 @@ import {
 } from "@material-ui/icons";
 
 import styles from "./Header.module.scss";
+import Link from "next/link";
 
 export const Header: React.FC = () => {
   return (
@@ -29,9 +30,11 @@ export const Header: React.FC = () => {
           <input placeholder="Поиск" />
         </div>
 
-        <Button variant="contained" className={styles.penButton}>
-          Новая запись
-        </Button>
+        <Link href="/write">
+          <Button variant="contained" className={styles.penButton}>
+            Новая запись
+          </Button>
+        </Link>
       </div>
       <div className="d-flex align-center">
         <IconButton>

@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: rgb(242, 242, 242);
+  background-color: #f2f2f2 !important;
   font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
 }
 
@@ -22,10 +22,24 @@ a {
   max-width: 640px;
   width: 100%;
   margin: 0 auto;
+
+  &--full {
+    max-width: 1000px;
+  }
 }
 
 .wrapper {
   display: flex;
   padding: 0 30px;
   padding-top: 80px;
+}
+
+.main-layout-white {
+  background-color: #fff;
+  height: 100vh;
+}
+
+.container {
+  margin: 0 auto;
+  width: 680px;
 }
