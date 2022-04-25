@@ -2,8 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(242, 242, 242);
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 a {
@@ -12,5 +12,20 @@ a {
 }
 
 * {
+  -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
+  outline: none;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.content {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  padding: 0 30px;
+  padding-top: 80px;
 }
