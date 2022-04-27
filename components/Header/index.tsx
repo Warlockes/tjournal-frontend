@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Paper,
   Button,
@@ -25,6 +25,16 @@ const handleChangeInput = () => undefined;
 const posts = [];
 
 export const Header: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className="d-flex align-center">
@@ -91,13 +101,13 @@ export const Header: React.FC = () => {
             </a>
           </Link>
         ) : (
-          <div className={styles.loginButton}>
+          <div className={styles.loginButton} onClick={handleOpenModal}>
             <UserIcon />
             Войти
           </div>
         )}
       </div>
-      <AuthDialog />
+      <AuthDialog visible={modalVisible} onClose={handleCloseModal} />
     </Paper>
   );
 };

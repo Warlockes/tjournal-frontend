@@ -12,13 +12,19 @@ import { RegisterForm } from "./forms/Register";
 
 import styles from "./AuthDialog.module.scss";
 
-const visible = false;
-const onClose = () => undefined;
+interface AuthDialogProps {
+  visible: boolean;
+  onClose: () => void;
+}
 
-export const AuthDialog = () => {
+export const AuthDialog: React.FC<AuthDialogProps> = ({ visible, onClose }) => {
   const [formType, setFormType] = React.useState<"main" | "login" | "register">(
     "main"
   );
+
+  const handleOpenLogin = () => {
+    setFormType("login");
+  };
 
   return (
     <Dialog open={visible} onClose={onClose} maxWidth="xs" fullWidth>
@@ -37,9 +43,7 @@ export const AuthDialog = () => {
                 </p>
               )}
             </Typography>
-            {formType === "main" && (
-              <MainForm onOpenLogin={() => setFormType("login")} />
-            )}
+            {formType === "main" && <MainForm onOpenLogin={handleOpenLogin} />}
             {formType === "login" && <LoginForm />}
             {formType === "register" && (
               <RegisterForm

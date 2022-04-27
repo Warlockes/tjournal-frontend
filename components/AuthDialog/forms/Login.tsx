@@ -12,30 +12,32 @@ const errorMessage = false;
 export const LoginForm = () => {
   return (
     <div>
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField name="email" label="Почта" />
-          <FormField name="password" label="Пароль" />
-          {errorMessage && (
-            <Alert severity="error" className="mb-20">
-              {errorMessage}
-            </Alert>
-          )}
-          <div className="d-flex align-center justify-between">
-            <Button
-              disabled={!form.formState.isValid || form.formState.isSubmitting}
-              type="submit"
-              color="primary"
-              variant="contained"
-            >
-              Войти
-            </Button>
-            <Button onClick={onOpenRegister} color="primary" variant="text">
-              Регистрация
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
+      {/* <FormProvider {...form}> */}
+      <form
+      // onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField name="email" label="Почта" />
+        <FormField name="password" label="Пароль" />
+        {errorMessage && (
+          <Alert severity="error" className="mb-20">
+            {errorMessage}
+          </Alert>
+        )}
+        <div className="d-flex align-center justify-between">
+          <Button
+            // disabled={!form.formState.isValid || form.formState.isSubmitting}
+            type="submit"
+            color="primary"
+            variant="contained"
+          >
+            Войти
+          </Button>
+          <Button onClick={onOpenRegister} color="primary" variant="text">
+            Регистрация
+          </Button>
+        </div>
+      </form>
+      {/* </FormProvider> */}
     </div>
   );
 };

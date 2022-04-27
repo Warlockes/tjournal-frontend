@@ -7,18 +7,21 @@ interface FormFieldProps {
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
-  const { register, formState } = useFormContext();
+  // const { register, formState } = useFormContext();
+
+  console.log("name", name);
+  console.log("label", label);
 
   return (
     <TextField
-      {...register(name)}
+      // {...register(name)}
       name={name}
       className="mb-20"
       size="small"
       label={label}
       variant="outlined"
-      error={!!formState.errors[name]?.message}
-      helperText={formState.errors[name]?.message}
+      // error={!!formState.errors[name]?.message}
+      // helperText={formState.errors[name]?.message}
       fullWidth
     />
   );
