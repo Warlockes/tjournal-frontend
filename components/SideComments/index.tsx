@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ArrowRightIcon from "@material-ui/icons/NavigateNextOutlined";
+import ArrowRightIcon from "@mui/icons-material/NavigateNextOutlined";
 import data from "../../data";
 import clsx from "clsx";
 import { CommentItem } from "./CommentItem";

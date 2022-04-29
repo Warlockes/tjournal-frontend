@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Button, ListItem } from "@material-ui/core";
+import { Button, ListItem } from "@mui/material";
 
 import { menu } from "../../constants/menu";
 import styles from "./LeftMenu.module.scss";

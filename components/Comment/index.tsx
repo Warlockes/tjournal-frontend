@@ -1,12 +1,6 @@
-import {
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@material-ui/core";
+import { Avatar, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import MoreIcon from "@material-ui/icons/MoreHorizOutlined";
+import MoreIcon from "@mui/icons-material/MoreHorizOutlined";
 
 import styles from "./Comment.module.scss";
 import { CommentObj } from "../PostComments";

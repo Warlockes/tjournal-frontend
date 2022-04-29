@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Input } from "@material-ui/core";
+import { Button, Input } from "@mui/material";
 import styles from "./WriteForm.module.scss";
 import dynamic from "next/dynamic";
-import { PostItem } from "../../utils/api/types";
+import { PostItem } from "../../types/types";
 import { useRouter } from "next/router";
 
 const Editor = dynamic(() => import("../Editor").then((m) => m.Editor), {

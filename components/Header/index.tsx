@@ -6,7 +6,7 @@ import {
   Avatar,
   List,
   ListItem,
-} from "@material-ui/core";
+} from "@mui/material";
 import {
   SearchOutlined as SearchIcon,
   SmsOutlined as MessageIcon,
@@ -14,7 +14,7 @@ import {
   ExpandMoreOutlined as ArrowBottom,
   NotificationsNoneOutlined as NotificationIcon,
   AccountCircleOutlined as UserIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 import styles from "./Header.module.scss";
 import Link from "next/link";

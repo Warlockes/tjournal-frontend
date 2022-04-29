@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 import VkIcon from "../../../img/icons/vk.svg";
 import GoogleIcon from "../../../img/icons/google.svg";

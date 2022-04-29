@@ -1,15 +1,15 @@
+import React from "react";
 import {
   Dialog,
   DialogContent,
   DialogContentText,
   Typography,
-} from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import React from "react";
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import { LoginForm } from "./forms/Login";
 import { MainForm } from "./forms/Main";
 import { RegisterForm } from "./forms/Register";
-
 import styles from "./AuthDialog.module.scss";
 
 interface AuthDialogProps {
@@ -26,6 +26,14 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ visible, onClose }) => {
     setFormType("login");
   };
 
+  const handleOpenRegister = () => {
+    setFormType("register");
+  };
+
+  const handleOpenMain = () => {
+    setFormType("main");
+  };
+
   return (
     <Dialog open={visible} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogContent>
@@ -35,21 +43,17 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ visible, onClose }) => {
               {formType === "main" ? (
                 "Вход в TJ"
               ) : (
-                <p
-                  onClick={() => setFormType("main")}
-                  className={styles.backTitle}
-                >
+                <p onClick={handleOpenMain} className={styles.backTitle}>
                   <ArrowBackIcon /> К авторизации
                 </p>
               )}
             </Typography>
             {formType === "main" && <MainForm onOpenLogin={handleOpenLogin} />}
-            {formType === "login" && <LoginForm />}
+            {formType === "login" && (
+              <LoginForm onOpenRegister={handleOpenRegister} />
+            )}
             {formType === "register" && (
-              <RegisterForm
-                onOpenRegister={() => setFormType("register")}
-                onOpenLogin={() => setFormType("login")}
-              />
+              <RegisterForm onOpenLogin={handleOpenLogin} />
             )}
           </div>
         </DialogContentText>

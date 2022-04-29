@@ -3,7 +3,7 @@ import {
   SmsOutlined as MessageIcon,
   TrendingUpOutlined as TrendingIcon,
   FormatListBulletedOutlined as ListIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 export const menu = [
   { text: "Лента", icon: <FireIcon />, path: "/" },

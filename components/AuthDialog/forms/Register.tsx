@@ -1,27 +1,32 @@
-import { Button } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Alert } from "@mui/material";
+import { FormProvider, useForm } from "react-hook-form";
+import { RegisterFormSchema } from "../../../utils/validations/registerForm";
+
 import { FormField } from "../../FormField";
 
 interface LoginFormProps {
-  onOpenRegister: () => void;
   onOpenLogin: () => void;
 }
 
-const form = {} as any;
 const errorMessage = false;
-const onSubmit = () => undefined;
 
-export const RegisterForm: React.FC<LoginFormProps> = ({
-  onOpenRegister,
-  onOpenLogin,
-}) => {
+export const RegisterForm: React.FC<LoginFormProps> = ({ onOpenLogin }) => {
+  const form = useForm({
+    mode: "onChange",
+    resolver: yupResolver(RegisterFormSchema),
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
       <FormProvider {...form}>
-        <FormField name="fullName" label="Имя и фамилия" />
+        <FormField name="fullname" label="Имя и фамилия" />
         <FormField name="email" label="Почта" />
-        <FormField name="password" label="Пароль" />
+        <FormField name="password" label="Пароль" type="password" />
         {errorMessage && (
           <Alert severity="error" className="mb-20">
             {errorMessage}
@@ -31,12 +36,13 @@ export const RegisterForm: React.FC<LoginFormProps> = ({
           <div className="d-flex align-center justify-between">
             <Button
               disabled={!form.formState.isValid || form.formState.isSubmitting}
-              onClick={onOpenRegister}
               type="submit"
               color="primary"
               variant="contained"
             >
-              Зарегистрироваться
+              {form.formState.isSubmitting
+                ? "Загрузка..."
+                : "Зарегистрироваться"}
             </Button>
             <Button onClick={onOpenLogin} color="primary" variant="text">
               Войти

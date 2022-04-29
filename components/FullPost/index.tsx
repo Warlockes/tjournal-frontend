@@ -1,6 +1,6 @@
-import { Paper, Typography, Button } from "@material-ui/core";
-import MessageIcon from "@material-ui/icons/TextsmsOutlined";
-import UserAddIcon from "@material-ui/icons/PersonAddOutlined";
+import { Paper, Typography, Button } from "@mui/material";
+import MessageIcon from "@mui/icons-material/TextsmsOutlined";
+import UserAddIcon from "@mui/icons-material/PersonAddOutlined";
 
 import styles from "./FullPost.module.scss";
 import { PostActions } from "../PostActions";

@@ -1,16 +1,9 @@
 import Link from "next/link";
-import {
-  Paper,
-  Avatar,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-} from "@material-ui/core";
+import { Paper, Avatar, Typography, Button, Tabs, Tab } from "@mui/material";
 import {
   SettingsOutlined as SettingsIcon,
   TextsmsOutlined as MessageIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 import { Post } from "../../components/Post";
 import { MainLayout } from "../../layouts/MainLayout";

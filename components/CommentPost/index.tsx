@@ -1,11 +1,5 @@
-import {
-  Paper,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Paper, Typography, IconButton, Menu, MenuItem } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React from "react";
 
 import styles from "./CommentPost.module.scss";

@@ -1,4 +1,4 @@
-import { Input, Button } from "@material-ui/core";
+import { Input, Button } from "@mui/material";
 import React from "react";
 
 import styles from "./AddCommentForm.module.scss";

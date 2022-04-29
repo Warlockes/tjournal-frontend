@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/CheckOutlined";
-import AddIcon from "@material-ui/icons/AddOutlined";
+import { Button } from "@mui/material";
+import CheckIcon from "@mui/icons-material/CheckOutlined";
+import AddIcon from "@mui/icons-material/AddOutlined";
 
 export const FollowButton: React.FC = () => {
   const [followed, setFollowed] = React.useState(false);
