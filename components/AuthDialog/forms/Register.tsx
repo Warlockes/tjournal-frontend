@@ -1,6 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { setCookie } from "nookies";
 import { Button, Alert } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import { UserApi } from "../../../utils/api";
+import { CreateUserDto } from "../../../utils/api/types";
 import { RegisterFormSchema } from "../../../utils/validations/registerForm";
 
 import { FormField } from "../../FormField";
@@ -9,22 +13,34 @@ interface LoginFormProps {
   onOpenLogin: () => void;
 }
 
-const errorMessage = false;
-
 export const RegisterForm: React.FC<LoginFormProps> = ({ onOpenLogin }) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const form = useForm({
     mode: "onChange",
     resolver: yupResolver(RegisterFormSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (formData: CreateUserDto) => {
+    try {
+      const response = await UserApi.register(formData);
+      setCookie(null, "tjournalAuthToken", response.access_token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
+      setErrorMessage(null);
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      }
+
+      console.warn("Register error", error);
+    }
   };
 
   return (
     <div>
       <FormProvider {...form}>
-        <FormField name="fullname" label="Имя и фамилия" />
+        <FormField name="fullName" label="Имя и фамилия" />
         <FormField name="email" label="Почта" />
         <FormField name="password" label="Пароль" type="password" />
         {errorMessage && (

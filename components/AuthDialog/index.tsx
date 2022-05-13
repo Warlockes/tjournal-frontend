@@ -37,26 +37,24 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ visible, onClose }) => {
   return (
     <Dialog open={visible} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogContent>
-        <DialogContentText>
-          <div className={styles.content}>
-            <Typography className={styles.title}>
-              {formType === "main" ? (
-                "Вход в TJ"
-              ) : (
-                <p onClick={handleOpenMain} className={styles.backTitle}>
-                  <ArrowBackIcon /> К авторизации
-                </p>
-              )}
-            </Typography>
-            {formType === "main" && <MainForm onOpenLogin={handleOpenLogin} />}
-            {formType === "login" && (
-              <LoginForm onOpenRegister={handleOpenRegister} />
+        <div className={styles.content}>
+          <Typography className={styles.title}>
+            {formType === "main" ? (
+              "Вход в TJ"
+            ) : (
+              <span onClick={handleOpenMain} className={styles.backTitle}>
+                <ArrowBackIcon /> К авторизации
+              </span>
             )}
-            {formType === "register" && (
-              <RegisterForm onOpenLogin={handleOpenLogin} />
-            )}
-          </div>
-        </DialogContentText>
+          </Typography>
+          {formType === "main" && <MainForm onOpenLogin={handleOpenLogin} />}
+          {formType === "login" && (
+            <LoginForm onOpenRegister={handleOpenRegister} />
+          )}
+          {formType === "register" && (
+            <RegisterForm onOpenLogin={handleOpenLogin} />
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

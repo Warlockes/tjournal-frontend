@@ -22,6 +22,7 @@
     "macro-css": "^1.0.5",
     "next": "12.1.5",
     "next-redux-wrapper": "^7.0.5",
+    "nookies": "^2.5.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "^7.30.0",

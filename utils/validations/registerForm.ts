@@ -4,6 +4,6 @@ import { LoginFormSchema } from "./loginForm";
 export const RegisterFormSchema = yup
   .object()
   .shape({
-    fullname: yup.string().required("Поле обязательно"),
+    fullName: yup.string().required("Поле обязательно"),
   })
   .concat(LoginFormSchema);
