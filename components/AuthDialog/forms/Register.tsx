@@ -13,6 +13,9 @@ interface LoginFormProps {
   onOpenLogin: () => void;
 }
 
+// TODO:
+// 1) Сделать активацию пользователя после регистрации (nodeMailer либа + TwitterClone)
+
 export const RegisterForm: React.FC<LoginFormProps> = ({ onOpenLogin }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const form = useForm({

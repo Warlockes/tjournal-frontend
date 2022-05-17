@@ -9,6 +9,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { LoginFormSchema } from "../../../utils/validations/loginForm";
 import { LoginUserDto } from "../../../utils/api/types";
 import { UserApi } from "../../../utils/api";
+import { useAppDispatch } from "../../../redux/hooks";
+import { setUserData } from "../../../redux/slices/user";
 
 interface LoginFormProps {
   onOpenRegister: () => void;
@@ -16,6 +18,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
   const form = useForm({
     mode: "onChange",
     resolver: yupResolver(LoginFormSchema),
@@ -23,11 +26,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 
   const onSubmit = async (formData: LoginUserDto) => {
     try {
-      const response = await UserApi.login(formData);
-      setCookie(null, "tjournalAuthToken", response.access_token, {
+      const userData = await UserApi.login(formData);
+      setCookie(null, "tjournalAuthToken", userData.access_token, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
+      dispatch(setUserData(userData));
       setErrorMessage(null);
     } catch (error) {
       if (error.response) {

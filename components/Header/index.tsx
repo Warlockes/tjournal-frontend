@@ -19,12 +19,15 @@ import {
 import styles from "./Header.module.scss";
 import Link from "next/link";
 import { AuthDialog } from "../AuthDialog";
+import { useAppSelector } from "../../redux/hooks";
+import { selectUserData } from "../../redux/slices/user";
 
 const searchValue = "";
 const handleChangeInput = () => undefined;
 const posts = [];
 
 export const Header: React.FC = () => {
+  const userData = useAppSelector(selectUserData);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleCloseModal = () => {
@@ -89,7 +92,7 @@ export const Header: React.FC = () => {
         <IconButton>
           <NotificationIcon />
         </IconButton>
-        {false ? (
+        {userData ? (
           <Link href="/profile/1">
             <a className="d-flex align-center">
               <Avatar

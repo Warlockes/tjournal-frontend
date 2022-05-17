@@ -7,6 +7,8 @@ import "macro-css";
 import Head from "next/head";
 import { AppProps } from "next/app";
 import { Header } from "../components/Header";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 // TODO:
 // 1) Поправить стили на кнопках в регистрации и т.д. Слетели из-за оверрайда темы
@@ -21,8 +23,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
-        <Header />
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Header />
+          <Component {...pageProps} />
+        </Provider>
       </ThemeProvider>
     </>
   );
