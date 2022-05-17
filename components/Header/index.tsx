@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Button,
@@ -27,8 +27,14 @@ const handleChangeInput = () => undefined;
 const posts = [];
 
 export const Header: React.FC = () => {
-  const userData = useAppSelector(selectUserData);
   const [modalVisible, setModalVisible] = useState(false);
+  const userData = useAppSelector(selectUserData);
+
+  useEffect(() => {
+    if (modalVisible && userData) {
+      setModalVisible(false);
+    }
+  }, [modalVisible, userData]);
 
   const handleCloseModal = () => {
     setModalVisible(false);

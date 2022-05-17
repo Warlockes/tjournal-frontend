@@ -8,9 +8,9 @@ import { FormField } from "../../FormField";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoginFormSchema } from "../../../utils/validations/loginForm";
 import { LoginUserDto } from "../../../utils/api/types";
-import { UserApi } from "../../../utils/api";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setUserData } from "../../../redux/slices/user";
+import { Api } from "../../../utils/api";
 
 interface LoginFormProps {
   onOpenRegister: () => void;
@@ -26,7 +26,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 
   const onSubmit = async (formData: LoginUserDto) => {
     try {
-      const userData = await UserApi.login(formData);
+      const userData = await Api().user.login(formData);
       setCookie(null, "tjournalAuthToken", userData.access_token, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",

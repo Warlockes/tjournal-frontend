@@ -3,11 +3,11 @@ import { useState } from "react";
 import { setCookie } from "nookies";
 import { Button, Alert } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { UserApi } from "../../../utils/api";
 import { CreateUserDto } from "../../../utils/api/types";
 import { RegisterFormSchema } from "../../../utils/validations/registerForm";
 
 import { FormField } from "../../FormField";
+import { Api } from "../../../utils/api";
 
 interface LoginFormProps {
   onOpenLogin: () => void;
@@ -25,7 +25,7 @@ export const RegisterForm: React.FC<LoginFormProps> = ({ onOpenLogin }) => {
 
   const onSubmit = async (formData: CreateUserDto) => {
     try {
-      const response = await UserApi.register(formData);
+      const response = await Api().user.register(formData);
       setCookie(null, "tjournalAuthToken", response.access_token, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
