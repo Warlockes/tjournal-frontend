@@ -6,8 +6,8 @@ import styles from "./FullPost.module.scss";
 import { PostActions } from "../PostActions";
 
 interface FullPostProps {
-  title?: string;
-  blocks?: any;
+  title: string;
+  blocks: any;
 }
 
 export const FullPost: React.FC<FullPostProps> = ({ title, blocks }) => {
@@ -18,7 +18,7 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks }) => {
           {title}
         </Typography>
         <div className={styles.text}>
-          {[].map((obj) => (
+          {blocks.map((obj) => (
             <Typography
               key={obj.id}
               dangerouslySetInnerHTML={{ __html: obj.data.text }}

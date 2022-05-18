@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { CreatePostDto, PostItem } from "./types";
+import { CreatePostDto, PostItem, UpdatePostDto } from "./types";
 
 export const PostApi = (instance: AxiosInstance) => ({
   async getAll() {
@@ -8,9 +8,24 @@ export const PostApi = (instance: AxiosInstance) => ({
     return data;
   },
 
+  async getOne(id: number) {
+    const { data } = await instance.get<PostItem>(`/posts/${id}`);
+
+    return data;
+  },
+
   async createPost(dto: CreatePostDto) {
     const { data } = await instance.post<CreatePostDto, { data: PostItem }>(
       "/posts",
+      dto
+    );
+
+    return data;
+  },
+
+  async updatePost(postId: number, dto: UpdatePostDto) {
+    const { data } = await instance.patch<UpdatePostDto, { data: PostItem }>(
+      `/posts/${postId}`,
       dto
     );
 

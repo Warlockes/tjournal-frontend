@@ -5,7 +5,6 @@ import {
   TextsmsOutlined as MessageIcon,
 } from "@mui/icons-material";
 
-import { Post } from "../../components/Post";
 import { MainLayout } from "../../layouts/MainLayout";
 
 export default function Profile() {
@@ -64,9 +63,7 @@ export default function Profile() {
         </Tabs>
       </Paper>
       <div className="d-flex align-start">
-        <div className="mr-20 flex">
-          <Post />
-        </div>
+        <div className="mr-20 flex">{/* <Post /> */}</div>
         <Paper style={{ width: 300 }} className="p-20 mb-20" elevation={0}>
           <b>Подписчики</b>
           <div className="d-flex mt-15">

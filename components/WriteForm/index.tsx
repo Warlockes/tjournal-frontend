@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { OutputData } from "@editorjs/editorjs";
 import { Api } from "../../utils/api";
 import { PostItem } from "../../utils/api/types";
+import { useRouter } from "next/router";
 
 const Editor = dynamic(() => import("../Editor").then((m) => m.Editor), {
   ssr: false,
@@ -15,6 +16,7 @@ interface WriteFormProps {
 }
 
 export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
+  const router = useRouter();
   const [isLoading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState(data?.title || "");
   const [blocks, setBlocks] = React.useState(data?.body || []);
@@ -30,7 +32,17 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
   const onAddPost = async () => {
     try {
       setLoading(true);
-      await Api().post.createPost({ title, body: blocks });
+      const dto = {
+        title,
+        body: blocks,
+      };
+
+      if (!data) {
+        const post = await Api().post.createPost(dto);
+        await router.push(`/write/${post.id}`);
+      } else {
+        await Api().post.updatePost(data.id, dto);
+      }
     } catch (error) {
       console.warn("Create post error", error);
       alert("ОшибОчка");

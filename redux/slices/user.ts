@@ -1,10 +1,10 @@
 import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
-import { AuthUserResponse } from "../../utils/api/types";
+import { UserResponse } from "../../utils/api/types";
 import { AppState } from "../store";
 
 export interface UserState {
-  data: AuthUserResponse | null;
+  data: UserResponse | null;
 }
 const initialState: UserState = {
   data: null,
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
   reducers: {
     setUserData: (
       state: Draft<UserState>,
-      action: PayloadAction<AuthUserResponse>
+      action: PayloadAction<UserResponse>
     ) => {
       state.data = action.payload;
     },

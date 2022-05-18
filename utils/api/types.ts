@@ -16,7 +16,9 @@ export interface CreatePostDto {
   tags?: string;
 }
 
-export interface AuthUserResponse {
+export interface UpdatePostDto extends Partial<CreatePostDto> {}
+
+export interface UserResponse {
   email: string;
   fullName: string;
   id: number;
@@ -35,5 +37,5 @@ export interface PostItem {
   createdAt: string;
   updatedAt: string;
   views: number;
-  userId: number;
+  user: UserResponse;
 }
