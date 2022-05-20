@@ -25,4 +25,10 @@ export const UserApi = (instance: AxiosInstance) => ({
 
     return data;
   },
+
+  async getAll() {
+    const { data } = await instance.get<UserResponse[]>("/users");
+
+    return data;
+  },
 });

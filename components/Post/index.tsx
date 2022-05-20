@@ -3,6 +3,7 @@ import { Paper, Typography } from "@mui/material";
 import Image from "next/image";
 
 import styles from "./Post.module.scss";
+import { PostActions } from "../PostActions";
 
 interface PostProps {
   title: string;
@@ -29,6 +30,7 @@ export const Post: React.FC<PostProps> = ({
       {imageUrl && (
         <Image src={imageUrl} height={500} width={600} alt={title} />
       )}
+      <PostActions />
     </Paper>
   );
 };

@@ -2,20 +2,15 @@ import React from "react";
 import Link from "next/link";
 
 import styles from "./SideComments.module.scss";
+import { PostItem, UserResponse } from "../../utils/api/types";
 
-interface CommentItemProps {
-  user: {
-    id: number;
-    fullName: string;
-  };
+interface SideCommentItemProps {
+  user: UserResponse;
   text: string;
-  post: {
-    id: number;
-    title: string;
-  };
+  post: PostItem;
 }
 
-export const CommentItem: React.FC<CommentItemProps> = ({
+export const SideCommentItem: React.FC<SideCommentItemProps> = ({
   user,
   text,
   post,

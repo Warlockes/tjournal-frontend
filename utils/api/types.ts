@@ -18,10 +18,16 @@ export interface CreatePostDto {
 
 export interface UpdatePostDto extends Partial<CreatePostDto> {}
 
+export interface CreateCommentDto {
+  postId: number;
+  text: string;
+}
+
 export interface UserResponse {
   email: string;
   fullName: string;
   id: number;
+  commentsCount?: number;
   createdAt: string;
   updatedAt: string;
   access_token: string;
@@ -38,4 +44,13 @@ export interface PostItem {
   updatedAt: string;
   views: number;
   user: UserResponse;
+}
+
+export interface CommentItem {
+  id: number;
+  text: string;
+  user: UserResponse;
+  post: PostItem;
+  createdAt: string;
+  updatedAt: string;
 }

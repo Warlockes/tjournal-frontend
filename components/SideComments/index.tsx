@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ArrowRightIcon from "@mui/icons-material/NavigateNextOutlined";
-import data from "../../data";
 import clsx from "clsx";
-import { CommentItem } from "./CommentItem";
+import { SideCommentItem } from "./SideCommentItem";
 
 import styles from "./SideComments.module.scss";
+import { useComments } from "../../hooks/useComments";
 
-export const SideComments = () => {
+export const SideComments: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [comments] = useComments();
 
   useEffect(() => {
     if (localStorage) {
@@ -31,9 +32,7 @@ export const SideComments = () => {
         Комментарии <ArrowRightIcon />
       </h3>
       {visible &&
-        data.comments.popular.map((obj) => (
-          <CommentItem key={obj.id} {...obj} />
-        ))}
+        comments.map((obj) => <SideCommentItem key={obj.id} {...obj} />)}
     </div>
   );
 };

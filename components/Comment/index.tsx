@@ -1,21 +1,31 @@
 import { Avatar, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import MoreIcon from "@mui/icons-material/MoreHorizOutlined";
+import { CommentItem } from "../../utils/api/types";
 
 import styles from "./Comment.module.scss";
-import { CommentObj } from "../PostComments";
+import { Api } from "../../utils/api";
 
-const handleClickRemove = () => undefined;
+interface CommentProps extends CommentItem {
+  currentUserId?: number;
+  onSuccessRemove: (id: number) => void;
+}
 
-export const Comment: React.FC<CommentObj> = ({
-  createdAt,
+//TODO:
+// 1) Вынести и настроить функцию для парсинга времени коммента
+// 2) Редактирование коммента + изменение времени тогда, и отображение, что коммент редактировали
+
+export const Comment: React.FC<CommentProps> = ({
   id,
   text,
+  createdAt,
   user,
+  currentUserId,
+  onSuccessRemove,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -23,17 +33,31 @@ export const Comment: React.FC<CommentObj> = ({
     setAnchorEl(null);
   };
 
+  const handleClickRemove = async () => {
+    if (window.confirm("Удалить комментарий?")) {
+      try {
+        await Api().comment.remove(id);
+        onSuccessRemove(id);
+      } catch (error) {
+        console.warn("Delete comment error", error);
+        alert("Произошла ошибка при удалении комментария");
+      } finally {
+        handleClose();
+      }
+    }
+  };
+
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
         <Avatar style={{ marginRight: 10 }}>{user.fullName[0]}</Avatar>
         <b>{user.fullName}</b>
-        <span>{createdAt}</span>
+        <span>{new Date(createdAt).toLocaleString()}</span>
       </div>
       <Typography className={styles.text}>{text}</Typography>
-      {false && (
+      <span className={styles.replyBtn}>Ответить</span>
+      {currentUserId === user.id && (
         <>
-          <span className={styles.replyBtn}>Ответить</span>
           <IconButton onClick={handleClick}>
             <MoreIcon />
           </IconButton>
@@ -45,7 +69,7 @@ export const Comment: React.FC<CommentObj> = ({
             keepMounted
           >
             <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
-            <MenuItem onClick={handleClose}>Редактировать</MenuItem>
+            <MenuItem>Редактировать</MenuItem>
           </Menu>
         </>
       )}

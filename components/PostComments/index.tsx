@@ -1,26 +1,29 @@
 import { Divider, Paper, Tab, Tabs, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useComments } from "../../hooks/useComments";
+import { useAppSelector } from "../../redux/hooks";
+import { selectUserData } from "../../redux/slices/user";
+import { Api } from "../../utils/api";
+import { CommentItem } from "../../utils/api/types";
 import { AddCommentForm } from "../AddCommentForm";
 import { Comment } from "../Comment";
-import data from "../../data";
 
-export type CommentObj = {
-  text: string;
-  id: number;
-  createdAt: string;
-  user: {
-    id: number;
-    fullName: string;
-    avatarUrl: string;
-  };
-  post: {
-    id: number;
-    title: string;
-  };
-};
-export const PostComments: React.FC = () => {
+interface PostCommentsProps {
+  postId: number;
+}
+
+export const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
+  const userData = useAppSelector(selectUserData);
   const [activeTab, setActiveTab] = React.useState<number>(0);
-  const comments = data.comments[activeTab === 0 ? "popular" : "new"];
+  const [comments, setComments] = useComments(postId);
+
+  const onAddComment = (comment: CommentItem) => {
+    setComments((prev) => [comment, ...prev]);
+  };
+
+  const onRemoveComment = (id: number) => {
+    setComments((prev) => prev.filter((comment) => comment.id !== id));
+  };
 
   const handleChangeTab = (_, newValue: number) => {
     setActiveTab(newValue);
@@ -43,10 +46,17 @@ export const PostComments: React.FC = () => {
           <Tab label="По порядку" />
         </Tabs>
         <Divider />
-        {true && <AddCommentForm />}
+        {userData && (
+          <AddCommentForm onSuccessAdd={onAddComment} postId={postId} />
+        )}
         <div className="mb-20" />
-        {comments.map((obj) => (
-          <Comment key={obj.id} {...obj} />
+        {comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            currentUserId={userData?.id}
+            onSuccessRemove={onRemoveComment}
+            {...comment}
+          />
         ))}
       </div>
     </Paper>
