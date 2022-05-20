@@ -18,6 +18,15 @@ export interface CreatePostDto {
 
 export interface UpdatePostDto extends Partial<CreatePostDto> {}
 
+export interface SearchPostDto {
+  title?: string;
+  body?: string;
+  views?: "DESC" | "ASC";
+  tag?: string;
+  limit?: number;
+  take?: number;
+}
+
 export interface CreateCommentDto {
   postId: number;
   text: string;

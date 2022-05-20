@@ -21,13 +21,13 @@ import Link from "next/link";
 import { AuthDialog } from "../AuthDialog";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUserData } from "../../redux/slices/user";
-
-const searchValue = "";
-const handleChangeInput = () => undefined;
-const posts = [];
+import { PostItem } from "../../utils/api/types";
+import { Api } from "../../utils/api";
 
 export const Header: React.FC = () => {
+  const [searchValue, setSearchValue] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [posts, setPosts] = useState<PostItem[]>([]);
   const userData = useAppSelector(selectUserData);
 
   useEffect(() => {
@@ -42,6 +42,26 @@ export const Header: React.FC = () => {
 
   const handleOpenModal = () => {
     setModalVisible(true);
+  };
+
+  const handleBlurInput = () => {
+    setPosts([]);
+  };
+
+  const handleChangeInput = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchValue(event.target.value);
+
+    try {
+      const { posts } = await Api().post.search({
+        title: event.target.value,
+      });
+
+      setPosts(posts);
+    } catch (error) {
+      console.warn("Search error", error);
+    }
   };
 
   return (
@@ -65,6 +85,7 @@ export const Header: React.FC = () => {
           <SearchIcon />
           <input
             value={searchValue}
+            onBlur={handleBlurInput}
             onChange={handleChangeInput}
             placeholder="Поиск"
           />

@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { CreatePostDto, PostItem, UpdatePostDto } from "./types";
+import { CreatePostDto, PostItem, SearchPostDto, UpdatePostDto } from "./types";
 
 export const PostApi = (instance: AxiosInstance) => ({
   async getAll() {
@@ -27,6 +27,15 @@ export const PostApi = (instance: AxiosInstance) => ({
     const { data } = await instance.patch<UpdatePostDto, { data: PostItem }>(
       `/posts/${postId}`,
       dto
+    );
+
+    return data;
+  },
+
+  async search(dto: SearchPostDto) {
+    const { data } = await instance.get<{ posts: PostItem[]; total: number }>(
+      "/posts/search",
+      { params: dto }
     );
 
     return data;
