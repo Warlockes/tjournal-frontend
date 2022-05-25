@@ -5,6 +5,8 @@ import { CommentItem } from "../../utils/api/types";
 
 import styles from "./Comment.module.scss";
 import { Api } from "../../utils/api";
+import { useAppDispatch } from "../../redux/hooks";
+import { setCommentData } from "../../redux/slices/comment";
 
 interface CommentProps extends CommentItem {
   currentUserId?: number;
@@ -21,9 +23,11 @@ export const Comment: React.FC<CommentProps> = ({
   createdAt,
   user,
   currentUserId,
+  post,
   onSuccessRemove,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useAppDispatch();
 
   const handleClick = (event: React.MouseEvent) => {
     setAnchorEl(event.currentTarget);
@@ -44,6 +48,17 @@ export const Comment: React.FC<CommentProps> = ({
       } finally {
         handleClose();
       }
+    }
+  };
+
+  const handleClickEdit = async () => {
+    try {
+      const comment = await Api().comment.getById(id);
+      dispatch(setCommentData(comment));
+      handleClose();
+    } catch (error) {
+      console.warn("Edit comment error", error);
+      alert("Произошла ошибка при попытке редактирования комментария");
     }
   };
 
@@ -69,7 +84,7 @@ export const Comment: React.FC<CommentProps> = ({
             keepMounted
           >
             <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
-            <MenuItem>Редактировать</MenuItem>
+            <MenuItem onClick={handleClickEdit}>Редактировать</MenuItem>
           </Menu>
         </>
       )}

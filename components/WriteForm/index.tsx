@@ -29,7 +29,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
     setBlocks(blocks);
   };
 
-  const onAddPost = async () => {
+  const handleClick = async () => {
     try {
       setLoading(true);
       const dto = {
@@ -44,8 +44,8 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         await Api().post.updatePost(data.id, dto);
       }
     } catch (error) {
-      console.warn("Create post error", error);
-      alert("ОшибОчка");
+      console.warn("Create/edit post error", error);
+      alert("Ошибка при создании/редактировании новости");
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         disabled={isLoading || !blocks.length || !title}
         variant="contained"
         color="primary"
-        onClick={onAddPost}
+        onClick={handleClick}
       >
         {data ? "Сохранить" : "Опубликовать"}
       </Button>

@@ -45,3 +45,16 @@
     font-weight: 500;
   }
 }
+
+.rating {
+  margin: 0 7px;
+}
+
+.changeRatingButton {
+  cursor: pointer;
+  fill: #c5c5c5;
+}
+
+.incrementButton {
+  transform: rotate(180deg);
+}

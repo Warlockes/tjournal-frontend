@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import styles from "./Post.module.scss";
 import { PostActions } from "../PostActions";
+import Link from "next/link";
 
 interface PostProps {
   title: string;
@@ -13,7 +14,7 @@ interface PostProps {
 }
 
 // TODO:
-// 1) Прикрутить просмоты на статью
+// 1) Прикрутить просмоты на статью - верстка
 
 export const Post: React.FC<PostProps> = ({
   id,
@@ -24,7 +25,9 @@ export const Post: React.FC<PostProps> = ({
   return (
     <Paper elevation={0} className="p-20" classes={{ root: styles.paper }}>
       <Typography variant="h5" className={styles.title}>
-        <a href={`/news/${id}`}>{title}</a>
+        <Link href={`/news/${id}`}>
+          <a>{title}</a>
+        </Link>
       </Typography>
       <Typography className="mt-10 mb-15">{description}</Typography>
       {imageUrl && (

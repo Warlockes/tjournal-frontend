@@ -56,13 +56,13 @@ const RatingPage: NextPage<RatingPageProps> = ({ users }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {users.map((user, index) => (
               <TableRow key={user.id}>
                 <TableCell component="th" scope="row">
-                  <span className="mr-15">{user.id}</span>
+                  <span className="mr-15">{index + 1}</span>
                   {user.fullName}
                 </TableCell>
-                <TableCell align="center">{user.commentsCount * 2}</TableCell>
+                <TableCell align="center">{user.rating}</TableCell>
                 <TableCell align="right">
                   <FollowButton />
                 </TableCell>
@@ -75,7 +75,7 @@ const RatingPage: NextPage<RatingPageProps> = ({ users }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const users = await Api().user.getAll();
 

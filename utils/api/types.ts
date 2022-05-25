@@ -32,11 +32,13 @@ export interface CreateCommentDto {
   text: string;
 }
 
+export interface UpdateCommentDto extends Partial<CreateCommentDto> {}
+
 export interface UserResponse {
   email: string;
   fullName: string;
   id: number;
-  commentsCount?: number;
+  rating: number;
   createdAt: string;
   updatedAt: string;
   access_token: string;

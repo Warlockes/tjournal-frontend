@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { CommentItem, CreateCommentDto } from "./types";
+import { CommentItem, CreateCommentDto, UpdateCommentDto } from "./types";
 
 export const CommentApi = (instance: AxiosInstance) => ({
   async create(dto: CreateCommentDto) {
@@ -21,5 +21,20 @@ export const CommentApi = (instance: AxiosInstance) => ({
 
   async remove(id: number) {
     return instance.delete(`/comments/${id}`);
+  },
+
+  async getById(id: number) {
+    const { data } = await instance.get<CommentItem>(`/comments/${id}`);
+
+    return data;
+  },
+
+  async edit(id: number, dto: UpdateCommentDto) {
+    const { data } = await instance.patch<
+      UpdateCommentDto,
+      { data: CommentItem }
+    >(`/comments/${id}`, dto);
+
+    return data;
   },
 });

@@ -6,6 +6,7 @@ import { AppState } from "../store";
 export interface UserState {
   data: UserResponse | null;
 }
+
 const initialState: UserState = {
   data: null,
 };

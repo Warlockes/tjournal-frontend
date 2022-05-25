@@ -1,5 +1,7 @@
 import { Input, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectCommentData, setCommentData } from "../../redux/slices/comment";
 import { Api } from "../../utils/api";
 import { CommentItem } from "../../utils/api/types";
 
@@ -8,6 +10,7 @@ import styles from "./AddCommentForm.module.scss";
 interface AddCommentFormProps {
   postId: number;
   onSuccessAdd: (comment: CommentItem) => void;
+  onSuccessEdit: (commentId: number, text) => void;
 }
 
 //TODO:
@@ -16,29 +19,56 @@ interface AddCommentFormProps {
 export const AddCommentForm: React.FC<AddCommentFormProps> = ({
   postId,
   onSuccessAdd,
+  onSuccessEdit,
 }) => {
   const [clicked, setClicked] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [text, setText] = React.useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useAppDispatch();
+  const commentData = useAppSelector(selectCommentData);
+
+  useEffect(() => {
+    if (commentData) {
+      setClicked(true);
+      setText(commentData.text);
+      setTimeout(() => inputRef.current.focus(), 100);
+    }
+  }, [commentData]);
+
+  useEffect(() => {
+    inputRef.current.style.minHeight = clicked ? "155px" : "23px";
+  }, [clicked]);
 
   const handleFocused = () => {
     setClicked(true);
+    inputRef.current.style.minHeight = "115px";
   };
 
-  const onAddComment = async () => {
+  const handleClick = async () => {
     setLoading(true);
 
     try {
-      const comment = await Api().comment.create({
-        postId,
-        text,
-      });
-      onSuccessAdd(comment);
-      setText("");
-      setClicked(false);
+      if (commentData) {
+        await Api().comment.edit(commentData.id, {
+          text,
+        });
+        onSuccessEdit(commentData.id, text);
+        setText("");
+        setClicked(false);
+        dispatch(setCommentData(null));
+      } else {
+        const comment = await Api().comment.create({
+          postId,
+          text,
+        });
+        onSuccessAdd(comment);
+        setText("");
+        setClicked(false);
+      }
     } catch (error) {
-      console.warn("Create comment error", error);
-      alert("Произошла ошибка при создании комментария");
+      console.warn("Create/edit comment error", error);
+      alert("Произошла ошибка при создании/редактировании комментария");
     } finally {
       setLoading(false);
     }
@@ -51,11 +81,11 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({
   return (
     <div className={styles.form}>
       <Input
+        inputRef={inputRef}
         disabled={isLoading}
         onChange={onChangeInput}
         value={text}
         onFocus={handleFocused}
-        minRows={clicked ? 5 : 1}
         classes={{ root: styles.fieldRoot }}
         placeholder="Написать комментарий..."
         fullWidth
@@ -65,11 +95,11 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({
         <Button
           disabled={isLoading}
           className={styles.addButton}
-          onClick={onAddComment}
+          onClick={handleClick}
           variant="contained"
           color="primary"
         >
-          Опубликовать
+          {commentData ? "Редактировать" : "Опубликовать"}
         </Button>
       )}
     </div>
