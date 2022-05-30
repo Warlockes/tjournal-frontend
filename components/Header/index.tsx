@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
   };
 
   const handleBlurInput = () => {
-    setPosts([]);
+    setTimeout(() => setPosts([]), 100);
   };
 
   const handleChangeInput = async (
@@ -92,10 +92,10 @@ export const Header: React.FC = () => {
           {posts.length > 0 && (
             <Paper className={styles.searchBlockPopup}>
               <List>
-                {posts.map((obj) => (
-                  <Link key={obj.id} href={`/news/${obj.id}`}>
+                {posts.map((post) => (
+                  <Link key={post.id} href={`/news/${post.id}`}>
                     <a>
-                      <ListItem button>{obj.title}</ListItem>
+                      <ListItem button>{post.title}</ListItem>
                     </a>
                   </Link>
                 ))}
