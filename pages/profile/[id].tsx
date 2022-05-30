@@ -105,8 +105,9 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ user }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { id } = ctx.params;
   try {
-    const user = await Api(ctx).user.getMe();
+    const user = await Api(ctx).user.getById(+id);
     return {
       props: {
         user,

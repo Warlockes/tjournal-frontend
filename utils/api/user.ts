@@ -37,6 +37,12 @@ export const UserApi = (instance: AxiosInstance) => ({
     return data;
   },
 
+  async getById(id: number) {
+    const { data } = await instance.get<UserResponse>(`/users/${id}`);
+
+    return data;
+  },
+
   async changeRating(dto: ChangeRatingDto) {
     const { data } = await instance.patch<
       ChangeRatingDto,
