@@ -58,3 +58,7 @@
 .incrementButton {
   transform: rotate(180deg);
 }
+
+.buttonDisabled {
+  pointer-events: none;
+}

@@ -6,8 +6,16 @@ import {
 } from "@mui/icons-material";
 
 import { MainLayout } from "../../layouts/MainLayout";
+import { GetServerSideProps, NextPage } from "next";
+import { Api } from "../../utils/api";
+import { UserResponse } from "../../utils/api/types";
+import { getStringWithNumber } from "../../utils/getStringWithNumber";
 
-export default function Profile() {
+interface ProfilePageProps {
+  user: UserResponse;
+}
+
+const ProfilePage: NextPage<ProfilePageProps> = ({ user }) => {
   return (
     <MainLayout contentFullWidth hideComments>
       <Paper className="pl-20 pr-20 pt-20 mb-30" elevation={0}>
@@ -15,14 +23,15 @@ export default function Profile() {
           <div>
             <Avatar
               style={{ width: 120, height: 120, borderRadius: 6 }}
-              src="https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/"
+              alt={user.fullName}
+              src={user.fullName[0]}
             />
             <Typography
               style={{ fontWeight: "bold" }}
               className="mt-10"
               variant="h4"
             >
-              Amon Bower
+              {user.fullName}
             </Typography>
           </div>
           <div>
@@ -45,11 +54,24 @@ export default function Profile() {
             style={{ fontWeight: "bold", color: "#35AB66" }}
             className="mr-15"
           >
-            +208
+            {user.rating}
           </Typography>
-          <Typography>2 подписчика</Typography>
+          <Typography>
+            {getStringWithNumber(10, [
+              "подписчик",
+              "подписчика",
+              "подписчиков",
+            ])}
+          </Typography>
         </div>
-        <Typography>На проекте с 15 сен 2016</Typography>
+        <Typography>
+          На проекте с {""}
+          {new Date(user.createdAt).toLocaleDateString("ru-Ru", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+        </Typography>
 
         <Tabs
           className="mt-20"
@@ -67,17 +89,39 @@ export default function Profile() {
         <Paper style={{ width: 300 }} className="p-20 mb-20" elevation={0}>
           <b>Подписчики</b>
           <div className="d-flex mt-15">
-            <Avatar
+            {/* <Avatar
               className="mr-10"
               src="https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/"
             />
             <Avatar
               className="mr-10"
               src="https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/"
-            />
+            /> */}
           </div>
         </Paper>
       </div>
     </MainLayout>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const user = await Api(ctx).user.getMe();
+    return {
+      props: {
+        user,
+      },
+    };
+  } catch (error) {
+    console.warn("Profile page error", error);
+    return {
+      props: {},
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+};
+
+export default ProfilePage;

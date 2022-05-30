@@ -65,3 +65,8 @@ export interface CommentItem {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ChangeRatingDto {
+  action: "increment" | "decrement";
+  id: number;
+}

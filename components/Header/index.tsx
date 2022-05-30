@@ -120,12 +120,12 @@ export const Header: React.FC = () => {
           <NotificationIcon />
         </IconButton>
         {userData ? (
-          <Link href="/profile/1">
+          <Link href={`/profile/${userData.id}`}>
             <a className="d-flex align-center">
               <Avatar
                 className={styles.avatar}
-                alt="Remy Sharp"
-                src="https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/"
+                alt={userData.fullName}
+                src={userData.fullName[0]}
               />
               <ArrowBottom />
             </a>

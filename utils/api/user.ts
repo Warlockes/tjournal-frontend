@@ -1,5 +1,10 @@
 import { AxiosInstance } from "axios";
-import { CreateUserDto, LoginUserDto, UserResponse } from "./types";
+import {
+  ChangeRatingDto,
+  CreateUserDto,
+  LoginUserDto,
+  UserResponse,
+} from "./types";
 
 export const UserApi = (instance: AxiosInstance) => ({
   async register(dto: CreateUserDto) {
@@ -28,6 +33,15 @@ export const UserApi = (instance: AxiosInstance) => ({
 
   async getAll() {
     const { data } = await instance.get<UserResponse[]>("/users");
+
+    return data;
+  },
+
+  async changeRating(dto: ChangeRatingDto) {
+    const { data } = await instance.patch<
+      ChangeRatingDto,
+      { data: UserResponse }
+    >("/users/rating", dto);
 
     return data;
   },
