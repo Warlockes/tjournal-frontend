@@ -11,7 +11,7 @@ export const CommentApi = (instance: AxiosInstance) => ({
     return data;
   },
 
-  async getAll(postId: number) {
+  async getAll(postId?: number) {
     const { data } = await instance.get<CommentItem[]>("/comments", {
       params: { postId },
     });

@@ -122,11 +122,7 @@ export const Header: React.FC = () => {
         {userData ? (
           <Link href={`/profile/${userData.id}`}>
             <a className="d-flex align-center">
-              <Avatar
-                className={styles.avatar}
-                alt={userData.fullName}
-                src={userData.fullName[0]}
-              />
+              <Avatar className={styles.avatar}>{userData.fullName[0]}</Avatar>
               <ArrowBottom />
             </a>
           </Link>

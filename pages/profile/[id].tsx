@@ -21,11 +21,9 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ user }) => {
       <Paper className="pl-20 pr-20 pt-20 mb-30" elevation={0}>
         <div className="d-flex justify-between">
           <div>
-            <Avatar
-              style={{ width: 120, height: 120, borderRadius: 6 }}
-              alt={user.fullName}
-              src={user.fullName[0]}
-            />
+            <Avatar style={{ width: 120, height: 120, borderRadius: 6 }}>
+              {user.fullName[0]}
+            </Avatar>
             <Typography
               style={{ fontWeight: "bold" }}
               className="mt-10"
